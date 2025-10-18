@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--bg-primary);      /* For bg-primary, border-primary, etc. */
+  --color-secondary: var(--bg-secondary);  /* For bg-secondary */
+  --color-text: var(--text-primary);       /* For text-primary (main text) */
+  --color-text-secondary: var(--text-secondary); /* For text-secondary */
+  --color-accent: var(--accent);           /* For bg-accent, text-accent, etc. */
+  --color-border: var(--border);           /* For border-border */
+  /* Optional: Add heading if needed --color-heading: var(--heading-primary); */
+}
+
+@layer theme {
+  :root {
+    /* Light mode values */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-accent: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #000000;
+    --heading-primary: #0f172a;
+    --heading-accent: #3b82f6;
+    --accent: #c2cedb;
+    --border: #d1d5db;
+  }
+
+  .dark {
+    /* Dark mode overrides */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-accent: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --heading-primary: #ffffff;
+    --heading-accent: #60a5fa;
+    --accent: #374d68;
+    --border: #374151;
+  }
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontend</title>
+
+    <script>
+      // Apply theme on page load to prevent FOUC
+      (function () {
+        const storedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      // Example functions to change theme
+      function setLightTheme() {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+
+      function setDarkTheme() {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      }
+
+      function setSystemTheme() {
+        document.documentElement.classList.toggle(
+          "dark",
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        );
+        localStorage.removeItem("theme");
+      }
+    </script>
+  </body>
+</html>

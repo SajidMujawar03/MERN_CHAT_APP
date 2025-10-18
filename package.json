@@ -1,0 +1,16 @@
+{
+  "name": "mern_chat_app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run run:frontend\" \"npm run run:backend\"",
+    "run:frontend": "cd frontend && npm run dev",
+    "run:backend": "cd backend && npm run dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
