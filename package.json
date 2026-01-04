@@ -1,16 +1,34 @@
 {
   "name": "mern_chat_app",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "concurrently \"npm run run:frontend\" \"npm run run:backend\"",
-    "run:frontend": "cd frontend && npm run dev",
-    "run:backend": "cd backend && npm run dev"
-  },
-  "author": "",
-  "license": "ISC",
   "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm run dev:frontend\" \"pnpm run dev:backend\"",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "Sajid Mujawar",
+  "license": "ISC",
+  "packageManager": "pnpm@10.27.0",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@typescript-eslint/eslint-plugin": "^8.51.0",
+    "@typescript-eslint/parser": "^8.51.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-n": "^17.23.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ]
   }
 }
