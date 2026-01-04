@@ -4,7 +4,7 @@ import SignupComponent from "../components/SignupComponent";
 
 const Auth: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<"login" | "signup">("login");
-
+  const a=0;
   return (
     <div className="flex justify-center items-start min-h-screen bg-secondary p-4">
       <div className="w-full max-w-md">
