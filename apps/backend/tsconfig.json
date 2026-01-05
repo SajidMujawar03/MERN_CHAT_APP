@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "rootDir": "src",
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,  // Helps with default imports in ESM
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "allowJs": true,  // NEW: Compile .js files (e.g., if config/database.js exists)
+    "checkJs": false,  // NEW: Skip type-checking JS files (optional, for speed)
     
-    "noUnusedLocals": false,      // stop errors for unused variables
-    "noUnusedParameters": false   // stop errors for unused function parameters
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "verbatimModuleSyntax": true
   },
-  "include": ["src"],
+  "ts-alias": {
+    "resolveFullPaths": true  // Auto-resolves full paths too
+  },
+  "include": ["src"],  // Covers src/config/database.ts (or .js)
   "exclude": ["node_modules", "dist"]
 }
