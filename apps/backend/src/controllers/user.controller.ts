@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import userService from "../services/user.service";
 import { UnauthorizedError } from "../error/error";
 

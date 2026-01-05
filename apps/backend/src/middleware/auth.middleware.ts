@@ -1,9 +1,10 @@
-import { NextFunction, Request, Response } from "express";
-import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
+import type { NextFunction, Request, Response } from "express";
+import jwt, {  type JwtPayload } from "jsonwebtoken";
 import { UnauthorizedError } from "../error/error";
 
 class AuthMiddleware {
   verifyToken(req: Request, res: Response, next: NextFunction) {
+    const { JsonWebTokenError} = jwt;
     try {
       const authHeader = req.headers.authorization;
 

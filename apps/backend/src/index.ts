@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/database";
 import chalk from "chalk";
 import authRoute from "./routes/auth.router";
-import { Route } from "./interfaces/route.interface";
+import type {  Route } from "./interfaces/route.interface";
 import { errorMiddleware } from "./middleware/error.middleware";
 import userRoute from "./routes/user.route";
 import chatRoute from "./routes/chat.route";

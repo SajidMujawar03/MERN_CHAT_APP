@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IChat } from "../interfaces/types";
+import type { IChat } from "../interfaces/types";
 
 const chatSchema = new mongoose.Schema<IChat>(
   {

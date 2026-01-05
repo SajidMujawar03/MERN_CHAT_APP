@@ -1,5 +1,5 @@
 import  { Router } from "express";
-import { Route } from "../interfaces/route.interface";
+import type { Route } from "../interfaces/route.interface";
 import authMiddleware from "../middleware/auth.middleware";
 import chatController from "../controllers/chat.controller";
 

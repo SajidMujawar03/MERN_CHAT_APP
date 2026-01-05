@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IUser } from "../interfaces/types";
+import type { IUser } from "../interfaces/types";
 
 const userSchema = new mongoose.Schema<IUser>({
     name:{

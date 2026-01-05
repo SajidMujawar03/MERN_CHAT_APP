@@ -1,7 +1,7 @@
-import { IUser } from "../interfaces/types";
+import type { IUser } from "../interfaces/types";
 import { User } from "../models/user.model";
 // import { IUser } from "../types";
-import { FilterQuery } from "mongoose";
+import type { FilterQuery } from "mongoose";
 
 class UserService {
   async getAllUser(search: string,currentUserId:string) {

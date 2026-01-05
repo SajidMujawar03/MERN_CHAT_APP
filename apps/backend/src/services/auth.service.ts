@@ -5,7 +5,7 @@ import {
 import { User } from "../models/user.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { IUser } from "../interfaces/types";
+import type { IUser } from "../interfaces/types";
 
 class AuthService {
   async register(email: string, password: string, pic: string, name: string) {

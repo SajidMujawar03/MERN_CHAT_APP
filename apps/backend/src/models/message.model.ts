@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IMessage } from "../interfaces/types";
+import type { IMessage } from "../interfaces/types";
 
 const messageSchema=new mongoose.Schema<IMessage>(
     {

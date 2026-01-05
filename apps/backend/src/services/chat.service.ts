@@ -1,5 +1,5 @@
 import { NotFoundError } from "../error/error";
-import { IChat, IUser } from "../interfaces/types";
+import type { IChat, IUser } from "../interfaces/types";
 import { Chat } from "../models/chat.model";
 import { User } from "../models/user.model";
 
