@@ -1,7 +1,7 @@
 import  { Router } from "express";
-import type { Route } from "../interfaces/route.interface";
-import authMiddleware from "../middleware/auth.middleware";
-import chatController from "../controllers/chat.controller";
+import type { Route } from "../interfaces/route.interface.ts";
+import authMiddleware from "../middleware/auth.middleware.ts";
+import chatController from "../controllers/chat.controller.ts";
 
 class ChatRouter implements Route {
   public path: string = "/chat";

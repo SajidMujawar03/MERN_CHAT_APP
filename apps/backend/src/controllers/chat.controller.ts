@@ -1,13 +1,13 @@
 import type { NextFunction, Request,  Response } from "express";
-import { BadRequestError } from "../error/error";
-import chatService from "../services/chat.service";
+import { BadRequestError } from "../error/error.ts";
+import chatService from "../services/chat.service.ts";
 
 class ChatController {
   async accessChat(req: Request, res: Response, next: NextFunction) {
     try {
 
       const { userId } = req.body;
-      const user=req.user!;
+      const user=req.user;
 
       if (!userId) throw new BadRequestError("Please Select User");
 

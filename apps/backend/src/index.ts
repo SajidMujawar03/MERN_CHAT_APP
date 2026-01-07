@@ -1,14 +1,14 @@
 import express  from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./config/database";
+import connectDB from "./config/database.ts";
 import chalk from "chalk";
-import authRoute from "./routes/auth.router";
-import type {  Route } from "./interfaces/route.interface";
-import { errorMiddleware } from "./middleware/error.middleware";
-import userRoute from "./routes/user.route";
-import chatRoute from "./routes/chat.route";
-import messageRoute from "./routes/message.route";
+import authRoute from "./routes/auth.router.ts";
+import type {  Route } from "./interfaces/route.interface.ts";
+import { errorMiddleware } from "./middleware/error.middleware.ts";
+import userRoute from "./routes/user.route.ts";
+import chatRoute from "./routes/chat.route.ts";
+import messageRoute from "./routes/message.route.ts";
 import http from "http";
 import { Server } from "socket.io";
 

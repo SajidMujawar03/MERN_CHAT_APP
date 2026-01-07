@@ -1,7 +1,7 @@
 import { Router } from "express";
-import type { Route } from "../interfaces/route.interface";
-import authMiddleware from "../middleware/auth.middleware";
-import messageController from "../controllers/message.controller";
+import type { Route } from "../interfaces/route.interface.ts";
+import authMiddleware from "../middleware/auth.middleware.ts";
+import messageController from "../controllers/message.controller.ts";
 
 
 class MessageRouter implements Route {

@@ -1,5 +1,5 @@
-import type { IUser } from "../interfaces/types";
-import { User } from "../models/user.model";
+import type { IUser } from "../interfaces/types.d.ts";
+import { User } from "../models/user.model.ts";
 // import { IUser } from "../types";
 import type { FilterQuery } from "mongoose";
 

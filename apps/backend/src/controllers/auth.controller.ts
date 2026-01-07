@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import authService from "../services/auth.service";
-import { BadRequestError } from "../error/error";
+import authService from "../services/auth.service.ts";
+import { BadRequestError } from "../error/error.ts";
 /**
  * Auth Controller
  * Handles user registration and login

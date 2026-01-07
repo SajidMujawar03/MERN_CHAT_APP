@@ -1,7 +1,7 @@
-import { NotFoundError } from "../error/error";
-import type { IChat, IUser } from "../interfaces/types";
-import { Chat } from "../models/chat.model";
-import { User } from "../models/user.model";
+import { NotFoundError } from "../error/error.ts";
+import type { IChat, IUser } from "../interfaces/types.d.ts";
+import { Chat } from "../models/chat.model.ts";
+import { User } from "../models/user.model.ts";
 
 class chatService {
   async accessChat(userId: string, currentUserId: string) {

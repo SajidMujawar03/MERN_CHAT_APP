@@ -1,7 +1,7 @@
 import  { Router } from "express";
-import type { Route } from "../interfaces/route.interface";
-import userController from "../controllers/user.controller";
-import authMiddleware from "../middleware/auth.middleware";
+import type { Route } from "../interfaces/route.interface.ts";
+import userController from "../controllers/user.controller.ts";
+import authMiddleware from "../middleware/auth.middleware.ts";
 
 class UserRouter implements Route {
   public path: string = "/user";

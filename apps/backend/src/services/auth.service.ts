@@ -1,11 +1,11 @@
 import {
   ConflictError,
   UnauthorizedError,
-} from "../error/error";
-import { User } from "../models/user.model";
+} from "../error/error.ts";
+import { User } from "../models/user.model.ts";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import type { IUser } from "../interfaces/types";
+import type { IUser } from "../interfaces/types.d.ts";
 
 class AuthService {
   async register(email: string, password: string, pic: string, name: string) {

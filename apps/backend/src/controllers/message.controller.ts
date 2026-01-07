@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { BadRequestError } from "../error/error";
-import messageService from "../services/message.service";
+import { BadRequestError } from "../error/error.ts";
+import messageService from "../services/message.service.ts";
 
 class MessageController {
   async sendMessage(req: Request, res: Response, next: NextFunction) {

@@ -1,5 +1,5 @@
 // errors/HttpErrors.ts
-import { ApiError } from "./ApiError";
+import { ApiError } from "./ApiError.ts";
 
 // 400 Bad Request
 export class BadRequestError extends ApiError {

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt, {  type JwtPayload } from "jsonwebtoken";
-import { UnauthorizedError } from "../error/error";
+import { UnauthorizedError } from "../error/error.ts";
 
 class AuthMiddleware {
   verifyToken(req: Request, res: Response, next: NextFunction) {

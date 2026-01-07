@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import userService from "../services/user.service";
-import { UnauthorizedError } from "../error/error";
+import userService from "../services/user.service.ts";
+import { UnauthorizedError } from "../error/error.ts";
 
 class UserController {
   async getAllUser(req: Request, res: Response, next: NextFunction) {

@@ -1,7 +1,7 @@
 
-import { Chat } from "../models/chat.model";
-import { Message } from "../models/message.model";
-import { User } from "../models/user.model";
+import { Chat } from "../models/chat.model.ts";
+import { Message } from "../models/message.model.ts";
+import { User } from "../models/user.model.ts";
 
 class MessageService {
     async sendMessage(sender: string, content: string, chat: string) {
