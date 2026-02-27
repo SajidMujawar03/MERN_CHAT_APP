@@ -16,15 +16,6 @@ export default [
     },
     rules: {
       ...n.configs.recommended.rules,
-      'n/no-missing-import': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          varsIgnorePattern: '^_',  // Ignores _next, _req, etc.
-          argsIgnorePattern: '^_',  // Also for args (e.g., callbacks)
-          caughtErrorsIgnorePattern: '^_',  // For try-catch
-        },
-      ],
       "n/no-process-exit": "warn"
     },
   },

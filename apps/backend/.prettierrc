@@ -1,0 +1,8 @@
+{
+  "overrides": [
+    {
+      "files": "@repo/prettier-config/index.json",
+      "options": { "parser": "json" }
+    }
+  ]
+}

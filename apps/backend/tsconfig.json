@@ -16,14 +16,12 @@
     "moduleResolution": "node16",
     "rootDir": "src",
 
-
     "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedParameters": false
   },
-  "include": ["src"],  // Covers src/config/database.ts (or .js)
+  "include": ["src"], // Covers src/config/database.ts (or .js)
   "exclude": ["node_modules", "dist"]
 }
-
 
 // {
 //   "compilerOptions": {

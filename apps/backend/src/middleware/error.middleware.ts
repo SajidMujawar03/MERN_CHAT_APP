@@ -1,13 +1,15 @@
 import type { Request, Response, NextFunction } from "express";
-import { ApiError } from "../error/ApiError.ts";
+import { Errors } from "../error/index.ts";
+
 
 export const errorMiddleware = (
   err: Error,
   req: Request,
   res: Response,
-  _next: NextFunction
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars*/
+  _next: NextFunction,
 ): void => {
-  if (err instanceof ApiError) {
+  if (err instanceof Errors.ApiError) {
     res.status(err.statusCode).json({
       success: false,
       message: err.message,
