@@ -1,136 +1,71 @@
-import { NotFoundError } from "../error/error.ts";
-import type { IChat, IUser } from "../interfaces/types.d.ts";
-import { Chat } from "../models/chat.model.ts";
-import { User } from "../models/user.model.ts";
+import { Types } from "mongoose";
+import { Errors } from "../error/index.ts";
+import type {  IUser } from "../interfaces/types.d.ts";
+import { chatRepository, userRepository } from "../repository/index.ts";
 
 class chatService {
   async accessChat(userId: string, currentUserId: string) {
-    
-    let isChat = await Chat.find<IChat>({
-      isGroupChat: false,
-      $and: [
-        { users: { $elemMatch: { $eq: userId } } },
-        { users: { $elemMatch: { $eq: currentUserId } } },
-      ],
-    })
-      .populate("users", "-password")
-      .populate("latestMessage");
+    let isChat = await chatRepository.isSingleChat(userId, currentUserId);
 
-    isChat = await User.populate<IChat>(isChat, {
-      path: "latestMessage.sender",
-      select: "name pic email",
-    });
-
-
+    isChat = await userRepository.populateUser("latestMessage.sender", "name pic email", isChat);
 
     if (isChat.length > 0) {
       return isChat[0];
-    } else {
+    }
+    else {
       const chatData = {
         chatName: "sender",
         isGroupChat: false,
-        users: [currentUserId, userId],
+        users: [currentUserId, userId].map((id) => new Types.ObjectId(id)),
       };
 
-      const chat = await Chat.create(chatData);
+      const chat = await chatRepository.createChat(chatData);
 
-      const fullChat = await Chat.findOne({ _id: chat._id }).populate(
-        "users",
-        "-password"
-      );
+      const fullChat = await chatRepository.findChatById(chat._id);
 
       if (!fullChat) {
-        throw new NotFoundError("Failed to create or fetch chat");
+        throw new Errors.NotFoundError("Failed to create or fetch chat");
       }
       return fullChat;
     }
   }
 
   async fetchChat(userId: string) {
-    const chat = await Chat.find({
-      users: { $elemMatch: { $eq: userId } },
-    })
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password")
-      .populate("latestMessage")
-      .sort({ updatedAt: -1 });
+    const chat = await chatRepository.findChatsByUserId(userId, -1);
 
-    const fullChat = await User.populate(chat, {
-      path: "latestMessage.sender",
-      select: "name pic email",
-    });
-
-  
+    const fullChat = await userRepository.populateUser("latestMessage.sender", "name pic email", chat)
 
     return fullChat;
   }
 
   async createGroupChat(name: string, users: IUser[], currentUserId: string) {
-    const groupChat = await Chat.create({
-      isGroupChat: true,
-      groupAdmin: currentUserId,
-      users: users,
-      chatName: name,
-    });
+    const groupChat = await chatRepository.createGroupChat(name, users.map((user) => user._id.toString()), currentUserId);
 
-
-    const fullChat = await Chat.findOne({ _id: groupChat._id })
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+    const fullChat = await chatRepository.findChatById(groupChat._id);
 
     return fullChat;
   }
 
   async renameGroup(chatName: string, chatId: string) {
-    const updatedChat = await Chat.findByIdAndUpdate(
-      chatId,
-      {
-        chatName,
-      },
-      {
-        new: true,
-      }
-    )
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+    const updatedChat = await chatRepository.renameGroup(chatName, chatId);
 
-    if (!updatedChat) throw new NotFoundError("Chat Not Found");
+    if (!updatedChat) throw new Errors.NotFoundError("Chat Not Found");
 
     return updatedChat;
   }
 
   async addToGroup(chatId: string, userId: string) {
-    const updatedGroup = await Chat.findByIdAndUpdate(
-      chatId,
-      {
-        $addToSet: {
-          users: userId,
-        },
-      },
-      { new: true }
-    )
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+    const updatedGroup = await chatRepository.addToGroup(chatId, userId);
 
-    if (!updatedGroup) throw new NotFoundError("Group Not Found");
+    if (!updatedGroup) throw new Errors.NotFoundError("Group Not Found");
 
     return updatedGroup;
   }
 
   async removeFromGroup(chatId: string, userId: string) {
-    const updatedGroup = await Chat.findByIdAndUpdate(
-      chatId,
-      {
-        $pull: {
-          users: userId,
-        },
-      },
-      { new: true }
-    )
-      .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+    const updatedGroup = await chatRepository.removeFromGroup(chatId, userId);
 
-    if (!updatedGroup) throw new NotFoundError("Group Not Found");
+    if (!updatedGroup) throw new Errors.NotFoundError("Group Not Found");
 
     return updatedGroup;
   }

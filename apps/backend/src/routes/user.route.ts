@@ -1,6 +1,6 @@
-import  { Router } from "express";
+import { Router } from "express";
 import type { Route } from "../interfaces/route.interface.ts";
-import userController from "../controllers/user.controller.ts";
+import { userController } from "../controllers/index.ts";
 import authMiddleware from "../middleware/auth.middleware.ts";
 
 class UserRouter implements Route {
@@ -12,8 +12,11 @@ class UserRouter implements Route {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, authMiddleware.verifyToken,userController.getAllUser);
-   
+    this.router.get(
+      `${this.path}`,
+      authMiddleware.verifyToken,
+      userController.getAllUser,
+    );
   }
 }
 

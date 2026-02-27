@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"pnpm run dev:frontend\" \"pnpm run dev:backend\"",
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend dev",
     "build": "pnpm -r run build",
     "lint": "pnpm -r run lint",
+    "lint-staged": "lint-staged",
     "prepare": "husky install",
     "start": "concurrently \"pnpm --filter backend start\" \"pnpm --filter frontend preview\""
   },
@@ -29,7 +31,10 @@
     "tsx": "^4.21.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
+    "apps/frontend/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ],
+    "apps/backend/**/*.{ts,tsx,js,jsx}": [
       "eslint --fix"
     ]
   }

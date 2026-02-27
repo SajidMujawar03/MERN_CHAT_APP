@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import type { IChat } from "../interfaces/types.d.ts";
+import type { IChat } from "../../interfaces/types.d.js";
 
 const chatSchema = new mongoose.Schema<IChat>(
   {
@@ -18,7 +18,7 @@ const chatSchema = new mongoose.Schema<IChat>(
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
-      }
+      },
     ],
     latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,9 +27,9 @@ const chatSchema = new mongoose.Schema<IChat>(
     groupAdmin: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    }
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Chat = mongoose.model<IChat>("Chat", chatSchema);
+export default mongoose.model<IChat>("Chat", chatSchema);

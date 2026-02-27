@@ -1,23 +1,18 @@
-import {
-  ConflictError,
-  UnauthorizedError,
-} from "../error/error.ts";
-import { User } from "../models/user.model.ts";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { Errors } from "../error/index.ts";
 import type { IUser } from "../interfaces/types.d.ts";
+import { userRepository } from "../repository/index.ts";
+import authUtils from "../utils/auth.utils.ts";
 
 class AuthService {
   async register(email: string, password: string, pic: string, name: string) {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await userRepository.findUserByEmail(email);
 
     if (existingUser) {
-      throw new ConflictError("User already exists");
+      throw new Errors.ConflictError("User already exists");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await authUtils.hashPassword(password);
 
-    // Prepare the user object dynamically
     const userData: Partial<IUser> = {
       email,
       password: hashedPassword,
@@ -25,27 +20,27 @@ class AuthService {
     };
 
     if (pic && pic.trim() !== "") {
-      userData.pic = pic; // only add pic if it’s not empty
+      userData.pic = pic;
     }
 
-    const newUser = await User.create(userData);
+    const newUser = await userRepository.createUser(userData);
 
     return newUser;
   }
 
   async login(email: string, password: string) {
-    const user = (await User.findOne({ email })) as IUser;
+    const user = await userRepository.findUserByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedError("Invalid email or password");
+      throw new Errors.UnauthorizedError("Invalid email or password");
     }
 
-    const isMatch = await bcrypt.compare(password, user.password as string);
+    const isMatch = await authUtils.comparePasswords(password, user.password);
     if (!isMatch) {
-      throw new UnauthorizedError("Invalid email or password");
+      throw new Errors.UnauthorizedError("Invalid email or password");
     }
 
-    const token = this.generateToken(user._id.toString(), user.email);
+    const token = authUtils.generateToken(user._id.toString(), user.email);
 
     return {
       _id: user._id,
@@ -56,13 +51,7 @@ class AuthService {
     };
   }
 
-  generateToken(_id: string, email: string) {
-    return jwt.sign(
-      { _id: _id, email: email },
-      process.env.JWT_SECRET_KEY as string,
-      { expiresIn: "10d" }
-    );
-  }
+  
 }
 
 export default new AuthService();

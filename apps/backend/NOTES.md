@@ -16,16 +16,16 @@ This is called **router or middleware priority**.
 ### 🔢 Example
 
 ```js
-const express = require('express');
+const express = require("express");
 const app = express();
 
 // Route 1
-app.get('/users', (req, res) => {
-  res.send('All Users');
+app.get("/users", (req, res) => {
+  res.send("All Users");
 });
 
 // Route 2
-app.get('/users/:id', (req, res) => {
+app.get("/users/:id", (req, res) => {
   res.send(`User with ID ${req.params.id}`);
 });
 ```
@@ -53,17 +53,17 @@ GET /users/123
 ### ⚠️ Incorrect Order Example
 
 ```js
-app.get('/users/:id', (req, res) => {
+app.get("/users/:id", (req, res) => {
   res.send(`User with ID ${req.params.id}`);
 });
 
-app.get('/users', (req, res) => {
-  res.send('All Users');
+app.get("/users", (req, res) => {
+  res.send("All Users");
 });
 ```
 
 Now, `GET /users` will match the first route (`/users/:id`)
-because `:id` can match *anything* — even the word "users".
+because `:id` can match _anything_ — even the word "users".
 
 So `/users` → `"User with ID users"` ❌
 
@@ -85,11 +85,11 @@ That’s why **order matters**.
 ### 🧩 With Routers Example
 
 ```js
-const userRouter = require('./routes/userRoutes');
-const adminRouter = require('./routes/adminRoutes');
+const userRouter = require("./routes/userRoutes");
+const adminRouter = require("./routes/adminRoutes");
 
-app.use('/admin', adminRouter);
-app.use('/users', userRouter);
+app.use("/admin", adminRouter);
+app.use("/users", userRouter);
 ```
 
 **Priority:**
@@ -102,17 +102,17 @@ app.use('/users', userRouter);
 
 ### ⚙️ Practical Tip
 
-* Always define **global middleware first** (e.g., CORS, JSON parser)
-* Then define **API-specific routers**
-* Finally define a **catch-all** route (e.g., 404 handler)
+- Always define **global middleware first** (e.g., CORS, JSON parser)
+- Then define **API-specific routers**
+- Finally define a **catch-all** route (e.g., 404 handler)
 
 Example:
 
 ```js
-app.use(express.json());         // Global middleware
-app.use('/api/users', userRouter);
-app.use('/api/admin', adminRouter);
-app.use('*', (req, res) => res.status(404).send('Not Found'));
+app.use(express.json()); // Global middleware
+app.use("/api/users", userRouter);
+app.use("/api/admin", adminRouter);
+app.use("*", (req, res) => res.status(404).send("Not Found"));
 ```
 
 ---
@@ -126,4 +126,3 @@ app.use('*', (req, res) => res.status(404).send('Not Found'));
 | **Fix**             | Put specific routes before general ones, and mount routers in the correct sequence. |
 
 ---
-

@@ -1,4 +1,3 @@
-
 import globals from 'globals';
 import reactConfig from '@repo/eslint-config/react';  // Import shared React flat config
 

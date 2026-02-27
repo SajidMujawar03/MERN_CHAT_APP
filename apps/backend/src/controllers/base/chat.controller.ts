@@ -1,18 +1,16 @@
-import type { NextFunction, Request,  Response } from "express";
-import { BadRequestError } from "../error/error.ts";
-import chatService from "../services/chat.service.ts";
+import type { NextFunction, Request, Response } from "express";
+import { Errors } from "../../error/index.ts";
+import chatService from "../../services/chat.service.ts";
 
 class ChatController {
   async accessChat(req: Request, res: Response, next: NextFunction) {
     try {
-
       const { userId } = req.body;
-      const user=req.user;
+      const user = req.user;
 
-      if (!userId) throw new BadRequestError("Please Select User");
+      if (!userId) throw new Errors.BadRequestError("Please Select User");
 
       const chatData = await chatService.accessChat(userId, user._id);
-
 
       return res
         .status(200)
@@ -25,19 +23,19 @@ class ChatController {
   async createGroupChat(req: Request, res: Response, next: NextFunction) {
     try {
       if (!req.body.name || !req.body.users)
-        throw new BadRequestError("All Fields Are Required");
-     
+        throw new Errors.BadRequestError("All Fields Are Required");
+
       const users = JSON.parse(req.body.users);
 
       if (users.length < 2)
-        throw new BadRequestError("Too few members selected");
+        throw new Errors.BadRequestError("Too few members selected");
 
       users.push(req.user);
 
       const result = await chatService.createGroupChat(
         req.body.name,
         users,
-        req.user!._id
+        req.user!._id,
       );
 
       return res
@@ -63,11 +61,15 @@ class ChatController {
 
   async renameGroup(req: Request, res: Response, next: NextFunction) {
     try {
-      const {chatName , chatId}=req.body;
+      const { chatName, chatId } = req.body;
 
-      const updatedChat=await chatService.renameGroup(chatName,chatId);
+      const updatedChat = await chatService.renameGroup(chatName, chatId);
 
-      return res.status(200).json({success:true,message:"Group name updated",data:updatedChat})
+      return res.status(200).json({
+        success: true,
+        message: "Group name updated",
+        data: updatedChat,
+      });
     } catch (error) {
       next(error);
     }
@@ -75,15 +77,17 @@ class ChatController {
 
   async removeFromGroup(req: Request, res: Response, next: NextFunction) {
     try {
-      const {chatId,userId}=req.body;
+      const { chatId, userId } = req.body;
 
-      if(!chatId || !userId)
-        throw new BadRequestError("All Fields Required");
+      if (!chatId || !userId) throw new Errors.BadRequestError("All Fields Required");
 
-      const updatedChat=await chatService.removeFromGroup(chatId,userId)
+      const updatedChat = await chatService.removeFromGroup(chatId, userId);
 
-      res.status(200).json({success:true,message:"User Removed Successfully",data:updatedChat})
-
+      res.status(200).json({
+        success: true,
+        message: "User Removed Successfully",
+        data: updatedChat,
+      });
     } catch (error) {
       next(error);
     }
@@ -91,12 +95,15 @@ class ChatController {
 
   async addToGroup(req: Request, res: Response, next: NextFunction) {
     try {
-      const {chatId,userId}=req.body
+      const { chatId, userId } = req.body;
 
-      const updatedChat=await chatService.addToGroup(chatId,userId);
+      const updatedChat = await chatService.addToGroup(chatId, userId);
 
-      res.status(200).json({success:true,message:"User Added To Group",data:updatedChat});
-
+      res.status(200).json({
+        success: true,
+        message: "User Added To Group",
+        data: updatedChat,
+      });
     } catch (error) {
       next(error);
     }

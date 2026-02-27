@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
+import  {config}  from "../index.ts";
 
 /**
  * Connects to MongoDB using Mongoose.
  */
 const connectDB = async (): Promise<void> => {
   try {
-    if (!process.env.MONGO_URI) {
+    if (!config.envConfig.requiredEnvVariables.DATABASE_URL) {
       throw new Error("MONGO_URI environment variable is not defined");
     }
 
-    await mongoose.connect(process.env.MONGO_URI, {
-      // Optional settings for deprecation warnings
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions);
+    await mongoose.connect(config.envConfig.requiredEnvVariables.DATABASE_URL);
 
     console.warn("MongoDB connected successfully");
   } catch (error) {

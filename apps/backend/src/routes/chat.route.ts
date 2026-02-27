@@ -1,7 +1,7 @@
-import  { Router } from "express";
+import { Router } from "express";
 import type { Route } from "../interfaces/route.interface.ts";
 import authMiddleware from "../middleware/auth.middleware.ts";
-import chatController from "../controllers/chat.controller.ts";
+import { chatController } from "../controllers/index.ts";
 
 class ChatRouter implements Route {
   public path: string = "/chat";
@@ -12,14 +12,36 @@ class ChatRouter implements Route {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}`, authMiddleware.verifyToken,chatController.accessChat);
-    this.router.get(`${this.path}`, authMiddleware.verifyToken,chatController.fetchChat);
-    this.router.post(`${this.path}/create-group-chat`, authMiddleware.verifyToken,chatController.createGroupChat);
-    this.router.put(`${this.path}/rename-group`, authMiddleware.verifyToken,chatController.renameGroup);
-    this.router.put(`${this.path}/add-to-group`, authMiddleware.verifyToken,chatController.addToGroup); 
-    this.router.put(`${this.path}/remove-from-group`, authMiddleware.verifyToken,chatController.removeFromGroup);
-
-   
+    this.router.post(
+      `${this.path}`,
+      authMiddleware.verifyToken,
+      chatController.accessChat,
+    );
+    this.router.get(
+      `${this.path}`,
+      authMiddleware.verifyToken,
+      chatController.fetchChat,
+    );
+    this.router.post(
+      `${this.path}/create-group-chat`,
+      authMiddleware.verifyToken,
+      chatController.createGroupChat,
+    );
+    this.router.put(
+      `${this.path}/rename-group`,
+      authMiddleware.verifyToken,
+      chatController.renameGroup,
+    );
+    this.router.put(
+      `${this.path}/add-to-group`,
+      authMiddleware.verifyToken,
+      chatController.addToGroup,
+    );
+    this.router.put(
+      `${this.path}/remove-from-group`,
+      authMiddleware.verifyToken,
+      chatController.removeFromGroup,
+    );
   }
 }
 

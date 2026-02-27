@@ -16,9 +16,9 @@ export interface IMessage extends Document {
 }
 
 export interface IUser extends Document {
-  _id:string;
-  name:string;
-  pic?:string;
-  email:string;
-  password:string;
+  _id: string;
+  name: string;
+  pic?: string;
+  email: string;
+  password: string;
 }

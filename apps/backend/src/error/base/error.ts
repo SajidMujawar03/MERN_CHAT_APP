@@ -1,5 +1,4 @@
-// errors/HttpErrors.ts
-import { ApiError } from "./ApiError.ts";
+import ApiError  from "./ApiError.ts";
 
 // 400 Bad Request
 export class BadRequestError extends ApiError {
@@ -63,3 +62,17 @@ export class ServiceUnavailableError extends ApiError {
     super(message, 503);
   }
 }
+
+
+export default {
+  BadRequestError,
+  UnauthorizedError,
+  ForbiddenError,
+  NotFoundError,
+  ConflictError,
+  ValidationError,
+  TooManyRequestsError,
+  InternalServerError,
+  ServiceUnavailableError,
+  ApiError
+};
