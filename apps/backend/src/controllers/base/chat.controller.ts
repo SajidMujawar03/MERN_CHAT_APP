@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { Errors } from "../../error/index.ts";
-import chatService from "../../services/chat.service.ts";
+import { chatService } from "../../services/index.ts";
 
 class ChatController {
+
   async accessChat(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req.body;

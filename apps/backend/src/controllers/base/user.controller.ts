@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import userService from "../../services/user.service.ts";
 import { Errors } from "../../error/index.ts";
+import { userService } from "../../services/index.ts";
 
 class UserController {
+
   async getAllUser(req: Request, res: Response, next: NextFunction) {
     try {
       const search = (req.query.search as string) || "";

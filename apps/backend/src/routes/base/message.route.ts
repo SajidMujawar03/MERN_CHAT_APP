@@ -1,7 +1,13 @@
+/**
+ * @author: Sajid Mujawar
+ */
+
 import { Router } from "express";
-import type { Route } from "../interfaces/route.interface.ts";
-import authMiddleware from "../middleware/auth.middleware.ts";
-import {messageController} from "../controllers/index.ts";
+import type { Route } from "../../interfaces/route.interface.ts";
+import { messageController } from "../../controllers/index.ts";
+import ValidationMiddleware from "../../middleware/validation.middleware.ts";
+import { messageSchema } from "../../schemas/index.ts";
+import authMiddleware from "../../middleware/auth.middleware.ts";
 
 class MessageRouter implements Route {
   public path: string = "/message";
@@ -15,11 +21,13 @@ class MessageRouter implements Route {
     this.router.post(
       `${this.path}/`,
       authMiddleware.verifyToken,
+      ValidationMiddleware.zodValidate(messageSchema.SendMessageSchema),
       messageController.sendMessage,
     );
     this.router.get(
       `${this.path}/:id`,
       authMiddleware.verifyToken,
+      ValidationMiddleware.zodValidate(messageSchema.GetMessagesSchema),
       messageController.allMessages,
     );
   }

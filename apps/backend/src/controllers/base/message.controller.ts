@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { Errors } from "../../error/index.ts";
-import messageService from "../../services/message.service.ts";
+import { messageService } from "../../services/index.ts";
 
 class MessageController {
+
   async sendMessage(req: Request, res: Response, next: NextFunction) {
     try {
       const sender = req.user!._id;

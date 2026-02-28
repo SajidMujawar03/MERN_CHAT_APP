@@ -92,6 +92,18 @@ class ChatRepository {
             .populate("users", "-password")
             .populate("groupAdmin", "-password");
     }
+
+    async updateLatestMessage(chatId: string, messageId: string) {
+        return await Chat.findByIdAndUpdate(
+            chatId,
+            {
+                latestMessage: messageId,
+            },
+            {
+                new: true,
+            },
+        );
+    }
 }
 
 export default new ChatRepository();

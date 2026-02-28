@@ -1,3 +1,6 @@
+/**
+ * @author: Sajid Mujawar
+ */
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -13,11 +16,11 @@ class AuthUtils {
     }
 
     async comparePasswords(plainPassword: string, hashedPassword: string) {
-        return bcrypt.compare(plainPassword, hashedPassword);
+        return await bcrypt.compare(plainPassword, hashedPassword);
     }
 
     async hashPassword(password: string) {
-        return bcrypt.hash(password, 10);
+        return await bcrypt.hash(password, 10);
     }
 
     verifyToken(token: string): jwt.JwtPayload {

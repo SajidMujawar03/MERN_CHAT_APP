@@ -1,7 +1,11 @@
-import { Errors } from "../error/index.ts";
-import type { IUser } from "../interfaces/types.d.ts";
-import { userRepository } from "../repository/index.ts";
-import authUtils from "../utils/auth.utils.ts";
+/**
+ * @author: Sajid Mujawar
+ */
+
+import { Errors } from "../../error/index.ts";
+import type { IUser } from "../../interfaces/types.d.js";
+import { userRepository } from "../../repository/index.ts";
+import authUtils from "../../utils/auth.utils.ts";
 
 class AuthService {
   async register(email: string, password: string, pic: string, name: string) {
@@ -51,7 +55,7 @@ class AuthService {
     };
   }
 
-  
+
 }
 
 export default new AuthService();

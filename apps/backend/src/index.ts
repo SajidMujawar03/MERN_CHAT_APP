@@ -1,16 +1,17 @@
+/**
+ * @author: Sajid Mujawar
+ */
+
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/index.ts";
 import chalk from "chalk";
-import authRoute from "./routes/auth.router.ts";
 import type { Route } from "./interfaces/route.interface.ts";
 import { errorMiddleware } from "./middleware/error.middleware.ts";
-import userRoute from "./routes/user.route.ts";
-import chatRoute from "./routes/chat.route.ts";
-import messageRoute from "./routes/message.route.ts";
 import http from "http";
 import { Server } from "socket.io";
 import { config } from "./config/index.ts";
+import { authRouter, chatRouter, messageRouter, userRouter } from "./routes/index.ts";
 
 const app = express();
 const server = http.createServer(app);
@@ -75,7 +76,7 @@ io.on("connection", (socket) => {
   });
 });
 
-initializeRoutes([authRoute, userRoute, chatRoute, messageRoute]);
+initializeRoutes([authRouter, userRouter, chatRouter, messageRouter]);
 
 app.use(errorMiddleware);
 

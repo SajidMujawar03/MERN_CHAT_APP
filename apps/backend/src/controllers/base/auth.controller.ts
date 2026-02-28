@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import authService from "../../services/auth.service.ts";
 import { Errors } from "../../error/index.ts";
+import { authService } from "../../services/index.ts";
 /**
  * Auth Controller
  * Handles user registration and login
@@ -16,9 +16,6 @@ class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password, pic, name } = req.body;
-      if (!email || !password || !name) {
-        throw new Errors.BadRequestError("email,password,name should be present !");
-      }
 
       const user = await authService.register(email, password, pic, name);
 

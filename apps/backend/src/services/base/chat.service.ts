@@ -1,13 +1,17 @@
+/**
+ * @author: Sajid Mujawar
+ */
+
 import { Types } from "mongoose";
-import { Errors } from "../error/index.ts";
-import type {  IUser } from "../interfaces/types.d.ts";
-import { chatRepository, userRepository } from "../repository/index.ts";
+import { Errors } from "../../error/index.ts";
+import type { IUser } from "../../interfaces/types.d.js";
+import { chatRepository, userRepository } from "../../repository/index.ts";
 
 class chatService {
   async accessChat(userId: string, currentUserId: string) {
     let isChat = await chatRepository.isSingleChat(userId, currentUserId);
 
-    isChat = await userRepository.populateUser("latestMessage.sender", "name pic email", isChat);
+    isChat = await userRepository.populateByUser(isChat, "latestMessage.sender", "name pic email");
 
     if (isChat.length > 0) {
       return isChat[0];
@@ -33,7 +37,7 @@ class chatService {
   async fetchChat(userId: string) {
     const chat = await chatRepository.findChatsByUserId(userId, -1);
 
-    const fullChat = await userRepository.populateUser("latestMessage.sender", "name pic email", chat)
+    const fullChat = await userRepository.populateByUser(chat, "latestMessage.sender", "name pic email")
 
     return fullChat;
   }
