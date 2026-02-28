@@ -9,6 +9,7 @@ export default [
   },
 
   // Spread in each package's flat config so that eslint has something to run
-  ...frontendConfig,
   ...backendConfig,
+  ...frontendConfig,
+
 ];

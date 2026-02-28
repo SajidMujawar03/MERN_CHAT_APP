@@ -13,6 +13,7 @@ export default [
         // ...globals.browser,
       },
     },
+    ignores: ['node_modules/', "dist/"],
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooks,

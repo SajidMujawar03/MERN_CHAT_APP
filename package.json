@@ -31,11 +31,11 @@
     "tsx": "^4.21.0"
   },
   "lint-staged": {
-    "apps/frontend/**/*.{ts,tsx,js,jsx}": [
-      "eslint --fix"
+    "apps/frontend/src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix --config ./apps/frontend/eslint.config.js"
     ],
-    "apps/backend/**/*.{ts,tsx,js,jsx}": [
-      "eslint --fix"
+    "apps/backend/src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix --config ./apps/backend/eslint.config.js"
     ]
   }
 }
