@@ -33,7 +33,7 @@ const LoginUserSchema = z.object({
             .string("Password is required")
             .min(6, "Password must be at least 6 characters long"),
     }),
-});
+}).strict();
 
 export default {
     RegisterUserSchema,
