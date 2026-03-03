@@ -1,5 +1,5 @@
 import { SortOrder } from "mongoose";
-import { IChat } from "../../interfaces/types.d.js";
+import type { IChat } from "../../interfaces/base/types.d.ts";
 import { Chat } from "../../models/index.ts";
 
 class ChatRepository {

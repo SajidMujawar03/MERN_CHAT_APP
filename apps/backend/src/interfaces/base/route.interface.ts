@@ -1,6 +1,9 @@
 import { Router } from "express";
 
-export interface Route {
+export default interface IRoute {
   path: string;
   router: Router;
+
+  initializeRoutes(): void;
 }
+

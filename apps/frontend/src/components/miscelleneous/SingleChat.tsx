@@ -93,7 +93,7 @@ const SingleChat: React.FC<SingleChatProps> = ({ fetchAgain, setFetchAgain }) =>
     if (!selectedChat?._id) return;
     try {
       setLoading(true);
-      const res = await api.get(`/message/${selectedChat._id}`);
+      const res = await api.get(`/messages/${selectedChat._id}`);
       setMessages(Array.isArray(res.data.data) ? res.data.data : []);
     } catch (err) {
       console.error("Failed to fetch messages:", err);
@@ -134,7 +134,7 @@ const SingleChat: React.FC<SingleChatProps> = ({ fetchAgain, setFetchAgain }) =>
     }
 
     try {
-      const res = await api.post("/message", {
+      const res = await api.post("/messages", {
         content: optimisticMsg.content,
         chat: selectedChat._id,
       });

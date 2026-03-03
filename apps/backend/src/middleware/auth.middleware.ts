@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Errors } from "../error/index.ts";
-import authUtils from "../utils/auth.utils.ts";
+import authUtils from "../utils/base/auth.utils.ts";
 
 class AuthMiddleware {
   verifyToken(req: Request, res: Response, next: NextFunction) {
@@ -10,7 +10,7 @@ class AuthMiddleware {
       const authHeader = req.headers.authorization;
 
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        throw new Errors.UnauthorizedError("No token provided");
+        throw new Errors.UnauthorizedError(["Missing token"]);
       }
 
       const token = authHeader.split(" ")[1];
@@ -22,7 +22,7 @@ class AuthMiddleware {
       next();
     } catch (error) {
       if (error instanceof JsonWebTokenError) {
-        next(new Errors.UnauthorizedError("Invalid or expired token"));
+        next(new Errors.UnauthorizedError(["Invalid/malformed token"]));
       } else {
         next(error);
       }

@@ -27,7 +27,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({ onClose }:GroupChatModa
     const { data: users = [], isError, isLoading, error } = useQuery<User[], Error>({
         queryKey: ["users", debouncedQuery],
         queryFn: async () => {
-            const res = await api.get(`/user?search=${debouncedQuery}`);
+            const res = await api.get(`/users?search=${debouncedQuery}`);
             return res.data.data;
         },
         enabled: debouncedQuery.length > 0,
@@ -50,7 +50,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({ onClose }:GroupChatModa
         }
 
         try {
-            const res = await api.post("/chat/create-group-chat", {
+            const res = await api.post("/chats/group-chat", {
                 name: groupName,
                 users: JSON.stringify(selectedUsers.map((u) => u._id)),
             });

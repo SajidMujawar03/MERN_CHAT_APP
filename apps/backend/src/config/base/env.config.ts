@@ -18,16 +18,5 @@ const envConfig:EnvConfig = {
   } as const
 } as const;
 
-const checkEnvVariables = (): void => {
-  const { requiredEnvVariables } = envConfig;
-  for (const [key, value] of Object.entries(requiredEnvVariables)) {
-    if (!value) {
-      console.warn(`Warning: Environment variable ${key} is not defined.`);
-    }
-  }
-}
 
-export default {
-  envConfig,
-  checkEnvVariables
-};
+export default envConfig;

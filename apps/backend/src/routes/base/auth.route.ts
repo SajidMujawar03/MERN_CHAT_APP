@@ -3,12 +3,12 @@
  */
 
 import { Router } from "express";
-import type { Route } from "../../interfaces/route.interface.ts";
+import type { IRoute } from "../../interfaces/index.ts";
 import { authController } from "../../controllers/index.ts";
 import ValidationMiddleware from "../../middleware/validation.middleware.ts";
 import { authSchema } from "../../schemas/index.ts";
 
-class AuthRouter implements Route {
+class AuthRouter implements IRoute {
   public path: string = "/auth";
   public router: Router = Router();
 
@@ -16,7 +16,7 @@ class AuthRouter implements Route {
     this.initializeRoutes();
   }
 
-  private initializeRoutes() {
+  public initializeRoutes() {
     this.router.post(
       `${this.path}/register`,
       ValidationMiddleware.zodValidate(authSchema.RegisterUserSchema),

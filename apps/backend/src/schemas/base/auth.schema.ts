@@ -3,35 +3,38 @@
  */
 
 import z from "zod";
+
+import { validationConfig } from "../../config/index.ts";
+
 const RegisterUserSchema = z.object({
     body: z.object({
         name: z
-            .string("Name is required")
-            .min(5, "Name must be at least 5 characters long"),
+            .string(validationConfig.user.name.requiredMessage)
+            .min(validationConfig.user.name.min.value, validationConfig.user.name.min.message),
         email: z
-            .string()
+            .string(validationConfig.user.email.requiredMessage)
             .trim()
             .toLowerCase()
-            .min(1, "Email is required")
-            .email("Invalid email address"),
+            .min(validationConfig.user.email.min.value, validationConfig.user.email.min.message)
+            .email(validationConfig.user.email.invalidMessage),
         password: z
-            .string("Password is required")
-            .min(6, "Password must be at least 6 characters long"),
-        pic: z.string().url("Picture must be a valid URL").optional(),
+            .string(validationConfig.user.password.requiredMessage)
+            .min(validationConfig.user.password.min.value, validationConfig.user.password.min.message),
+        pic: z.string().url(validationConfig.user.pic.invalidMessage).optional(),
     }),
 });
 
 const LoginUserSchema = z.object({
     body: z.object({
         email: z
-            .string()
+            .string(validationConfig.user.email.requiredMessage)
             .trim()
             .toLowerCase()
-            .min(1, "Email is required")
-            .email("Invalid email address"),
+            .min(validationConfig.user.email.min.value, validationConfig.user.email.min.message)
+            .email(validationConfig.user.email.invalidMessage),
         password: z
-            .string("Password is required")
-            .min(6, "Password must be at least 6 characters long"),
+            .string(validationConfig.user.password.requiredMessage)
+            .min(validationConfig.user.password.min.value, validationConfig.user.password.min.message),
     }),
 }).strict();
 

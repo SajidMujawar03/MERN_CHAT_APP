@@ -1,4 +1,4 @@
-import { IMessage } from "../../interfaces/types.d.js";
+import type { IMessage } from "../../interfaces/base/types.d.ts";
 import { Message } from "../../models/index.ts";
 
 class MessageRepository {

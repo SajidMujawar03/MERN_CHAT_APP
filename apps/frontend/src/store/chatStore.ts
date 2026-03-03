@@ -46,7 +46,7 @@ const useChat = create<ChatStore>()(
 
             setChats: async () => {
                 try {
-                    const res = await api.get("/chat");
+                    const res = await api.get("/chats");
 
                     set({ chats: res.data.data });
 

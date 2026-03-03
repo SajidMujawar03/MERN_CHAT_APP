@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { Errors } from "../../error/index.ts";
 import { messageService } from "../../services/index.ts";
+import ResponseUtils from "../../utils/base/response.util.ts";
 
 class MessageController {
 
@@ -9,12 +10,10 @@ class MessageController {
       const sender = req.user!._id;
       const { content, chat } = req.body;
       if (!content || !chat)
-        throw new Errors.BadRequestError("Provide ChatId and Content");
+        throw new Errors.BadRequestError(["Sending message"]);
       const message = await messageService.sendMessage(sender, content, chat);
 
-      return res
-        .status(200)
-        .json({ success: true, message: "Message sent", data: message });
+      return ResponseUtils.success(res, message, "Message sent", 200);
     } catch (error) {
       next(error);
     }
@@ -24,15 +23,11 @@ class MessageController {
     try {
       const { id } = req.params;
 
-      if (!id) throw new Errors.BadRequestError("Please provide Chat Id");
+      if (!id) throw new Errors.BadRequestError(["Accessing messages"]);
 
       const allMessages = await messageService.allMessage(id);
 
-      res.status(200).json({
-        success: true,
-        message: "Messages Fetched",
-        data: allMessages,
-      });
+      return ResponseUtils.success(res, allMessages, "Messages Fetched", 200);
     } catch (error) {
       next(error);
     }

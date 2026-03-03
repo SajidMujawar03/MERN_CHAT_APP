@@ -3,21 +3,21 @@
  */
 
 import { Router } from "express";
-import type { Route } from "../../interfaces/route.interface.ts";
+import type { IRoute } from "../../interfaces/index.ts";
 import { chatController } from "../../controllers/index.ts";
 import ValidationMiddleware from "../../middleware/validation.middleware.ts";
 import { chatSchema } from "../../schemas/index.ts";
 import authMiddleware from "../../middleware/auth.middleware.ts";
 
-class ChatRouter implements Route {
-  public path: string = "/chat";
+class ChatRouter implements IRoute {
+  public path: string = "/chats";
   public router: Router = Router();
 
   constructor() {
     this.initializeRoutes();
   }
 
-  private initializeRoutes() {
+  public initializeRoutes() {
     this.router.post(
       `${this.path}`,
       authMiddleware.verifyToken,
@@ -31,7 +31,7 @@ class ChatRouter implements Route {
       chatController.fetchChat,
     );
     this.router.post(
-      `${this.path}/create-group-chat`,
+      `${this.path}/group-chat`,
       authMiddleware.verifyToken,
       ValidationMiddleware.zodValidate(chatSchema.CreateGroupChatSchema),
       chatController.createGroupChat,

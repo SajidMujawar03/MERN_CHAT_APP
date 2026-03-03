@@ -25,7 +25,7 @@ const SideDrawer = ({ isOpen, onClose }: SideDrawerProps) => {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ["users", debouncedQuery],
     queryFn: async () => {
-      const res = await api.get(`/user?search=${debouncedQuery}`);
+      const res = await api.get(`/users?search=${debouncedQuery}`);
       return res.data.data;
     },
     enabled: debouncedQuery.length > 0, // only run when user types something
@@ -33,7 +33,7 @@ const SideDrawer = ({ isOpen, onClose }: SideDrawerProps) => {
 
   const accessChat = async (userId: string) => {
     try{
-    const res = await api.post(`/chat`, { userId });
+    const res = await api.post(`/chats`, { userId });
     const chat = res.data.data;
     setSelectedChat(chat)
 

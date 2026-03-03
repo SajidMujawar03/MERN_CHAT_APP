@@ -36,7 +36,7 @@ const UpdateGroupModal: React.FC<UpdateGroupModalProps> = ({
   const { data: users = [], isFetching } = useQuery<User[]>({
     queryKey: ["users", debouncedQuery],
     queryFn: async () => {
-      const res = await api.get(`/user?search=${debouncedQuery}`);
+      const res = await api.get(`/users?search=${debouncedQuery}`);
       return res.data.data;
     },
     enabled: debouncedQuery.length > 0,
@@ -48,7 +48,7 @@ const UpdateGroupModal: React.FC<UpdateGroupModalProps> = ({
 
     try {
       setLoading(true);
-      const res = await api.put(`/chat/rename-group`, {
+      const res = await api.put(`/chats/rename-group`, {
         chatId: selectedChat?._id,
         chatName: groupName,
       });
@@ -77,7 +77,7 @@ const UpdateGroupModal: React.FC<UpdateGroupModalProps> = ({
 
     try {
       setLoading(true);
-      const res = await api.put(`/chat/add-to-group`, {
+      const res = await api.put(`/chats/add-to-group`, {
         chatId: selectedChat?._id,
         userId: addUser._id,
       });
@@ -104,7 +104,7 @@ const UpdateGroupModal: React.FC<UpdateGroupModalProps> = ({
 
     try {
       setLoading(true);
-      const res = await api.put(`/chat/remove-from-group`, {
+      const res = await api.put(`/chats/remove-from-group`, {
         chatId: selectedChat?._id,
         userId: removeUser._id,
       });

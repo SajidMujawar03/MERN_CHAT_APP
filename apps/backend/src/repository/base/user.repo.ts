@@ -1,5 +1,5 @@
 
-import { IUser } from "../../interfaces/types.d.js";
+import type { IUser } from "../../interfaces/base/types.d.ts";
 import { User } from "../../models/index.ts";
 
 class UserRepository {

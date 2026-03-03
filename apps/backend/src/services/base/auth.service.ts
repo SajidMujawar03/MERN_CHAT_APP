@@ -3,16 +3,16 @@
  */
 
 import { Errors } from "../../error/index.ts";
-import type { IUser } from "../../interfaces/types.d.js";
+import type { IUser } from "../../interfaces/base/types.d.ts";
 import { userRepository } from "../../repository/index.ts";
-import authUtils from "../../utils/auth.utils.ts";
+import authUtils from "../../utils/base/auth.utils.ts";
 
 class AuthService {
   async register(email: string, password: string, pic: string, name: string) {
     const existingUser = await userRepository.findUserByEmail(email);
 
     if (existingUser) {
-      throw new Errors.ConflictError("User already exists");
+      throw new Errors.ConflictError(["User"]);
     }
 
     const hashedPassword = await authUtils.hashPassword(password);
@@ -36,12 +36,12 @@ class AuthService {
     const user = await userRepository.findUserByEmail(email);
 
     if (!user) {
-      throw new Errors.UnauthorizedError("Invalid email or password");
+      throw new Errors.UnauthorizedError(["Invalid email or password"]);
     }
 
     const isMatch = await authUtils.comparePasswords(password, user.password);
     if (!isMatch) {
-      throw new Errors.UnauthorizedError("Invalid email or password");
+      throw new Errors.UnauthorizedError(["Invalid email or password"]);
     }
 
     const token = authUtils.generateToken(user._id.toString(), user.email);

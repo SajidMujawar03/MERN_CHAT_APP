@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { Errors } from "../error/index.ts";
-
+import ResponseUtils from "../utils/base/response.util.ts";
+import { errorConfig } from "../config/index.ts";
 
 export const errorMiddleware = (
   err: Error,
@@ -10,15 +11,9 @@ export const errorMiddleware = (
   _next: NextFunction,
 ): void => {
   if (err instanceof Errors.ApiError) {
-    res.status(err.statusCode).json({
-      success: false,
-      message: err.message,
-    });
+    ResponseUtils.fail(res, err.message, err.statusCode, err.errors);
     return;
   }
 
-  res.status(500).json({
-    success: false,
-    message: "Internal Server Error",
-  });
+  ResponseUtils.fail(res, errorConfig.INTERNAL_SERVER_ERROR.message, 500, []);
 };

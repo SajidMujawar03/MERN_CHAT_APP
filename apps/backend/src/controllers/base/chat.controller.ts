@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { Errors } from "../../error/index.ts";
 import { chatService } from "../../services/index.ts";
+import ResponseUtils from "../../utils/base/response.util.ts";
+import { httpStatusCodeConfig } from "../../config/index.ts";
 
 class ChatController {
 
@@ -9,13 +11,11 @@ class ChatController {
       const { userId } = req.body;
       const user = req.user;
 
-      if (!userId) throw new Errors.BadRequestError("Please Select User");
+      if (!userId) throw new Errors.BadRequestError(["User Selection Required"]);
 
       const chatData = await chatService.accessChat(userId, user._id);
 
-      return res
-        .status(200)
-        .json({ success: true, message: "Chat fetched", data: chatData });
+      return ResponseUtils.success(res, chatData, "Chat fetched", httpStatusCodeConfig.OK);
     } catch (error) {
       next(error);
     }
@@ -24,12 +24,12 @@ class ChatController {
   async createGroupChat(req: Request, res: Response, next: NextFunction) {
     try {
       if (!req.body.name || !req.body.users)
-        throw new Errors.BadRequestError("All Fields Are Required");
+        throw new Errors.BadRequestError(["All Fields Are Required"]);
 
       const users = JSON.parse(req.body.users);
 
       if (users.length < 2)
-        throw new Errors.BadRequestError("Too few members selected");
+        throw new Errors.BadRequestError(["Too Few Members Selected"]);
 
       users.push(req.user);
 
@@ -39,9 +39,7 @@ class ChatController {
         req.user!._id,
       );
 
-      return res
-        .status(200)
-        .json({ success: true, message: "Created Group Chat", data: result });
+      return ResponseUtils.success(res, result, "Created Group Chat", httpStatusCodeConfig.CREATED);
     } catch (error) {
       console.error(error);
       next(error);
@@ -52,9 +50,7 @@ class ChatController {
     try {
       const chats = await chatService.fetchChat(req.user!._id);
 
-      return res
-        .status(200)
-        .json({ success: true, message: "chats fetched", data: chats });
+      return ResponseUtils.success(res, chats, "chats fetched", httpStatusCodeConfig.OK);
     } catch (error) {
       next(error);
     }
@@ -66,11 +62,7 @@ class ChatController {
 
       const updatedChat = await chatService.renameGroup(chatName, chatId);
 
-      return res.status(200).json({
-        success: true,
-        message: "Group name updated",
-        data: updatedChat,
-      });
+      return ResponseUtils.success(res, updatedChat, "Group name updated", );
     } catch (error) {
       next(error);
     }
@@ -80,15 +72,11 @@ class ChatController {
     try {
       const { chatId, userId } = req.body;
 
-      if (!chatId || !userId) throw new Errors.BadRequestError("All Fields Required");
+      if (!chatId || !userId) throw new Errors.BadRequestError(["All Fields Required"]);
 
       const updatedChat = await chatService.removeFromGroup(chatId, userId);
 
-      res.status(200).json({
-        success: true,
-        message: "User Removed Successfully",
-        data: updatedChat,
-      });
+      return ResponseUtils.success(res, updatedChat, "User Removed successfully", 200);
     } catch (error) {
       next(error);
     }
@@ -100,11 +88,7 @@ class ChatController {
 
       const updatedChat = await chatService.addToGroup(chatId, userId);
 
-      res.status(200).json({
-        success: true,
-        message: "User Added To Group",
-        data: updatedChat,
-      });
+      return ResponseUtils.success(res, updatedChat, "User Added To Group", 200);
     } catch (error) {
       next(error);
     }

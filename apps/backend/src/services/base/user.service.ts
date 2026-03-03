@@ -2,7 +2,7 @@
  * @author: Sajid Mujawar
  */
 
-import type { IUser } from "../../interfaces/types.d.js";
+import type { IUser } from "../../interfaces/base/types.d.ts";
 import type { FilterQuery } from "mongoose";
 import { userRepository } from "../../repository/index.ts";
 
