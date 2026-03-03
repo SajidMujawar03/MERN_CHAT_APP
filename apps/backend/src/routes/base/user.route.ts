@@ -10,7 +10,7 @@ import { userSchema } from "../../schemas/index.ts";
 import authMiddleware from "../../middleware/auth.middleware.ts";
 
 class UserRouter implements IRoute {
-  public path: string = "/user";
+  public path: string = "/users";
   public router: Router = Router();
 
   constructor() {
