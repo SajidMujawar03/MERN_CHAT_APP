@@ -1,4 +1,4 @@
-import { ErrorType } from "../../interfaces/base/error.d.ts";
+import type { ErrorType } from "../../interfaces/base/error.d.ts";
 
 // errors/ApiError.ts
 export default class ApiError extends Error {
